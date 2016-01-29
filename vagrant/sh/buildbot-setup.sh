@@ -8,4 +8,12 @@ case `uname` in
     hg init
     echo "^state.sqlite"
     ;;
+  Linux)
+    # Debian:
+    buildbot create-master master
+    sudo cp /vagrant/init/debian/buildmaster buildmaster
+    sudo service buildmaster start
+    sudo update-rc.d buildmaster enable
+    ;;
 esac
+

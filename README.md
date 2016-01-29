@@ -5,6 +5,28 @@
 - [Buildbot Vagrant Environment](vagrant)
 - [Buildbot Master Configuration](master)
 
+# Getting Started
+
+1. Start Subversion Repository
+~~~
+cd repo/svn
+./serve.sh
+~~~
+
+2. Start Vagrant Build Farm
+~~~
+cd vagrant
+vagrant up
+~~~
+
+3. Work 
+~~~
+cd repo/svn/work
+echo "update" >>update-trigger
+svn commit -m "update
+~~~
+
+Watch build farm compilation at http://master.bb:8010/waterfall
 
 ~~~
 repo/

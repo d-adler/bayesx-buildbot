@@ -21,6 +21,8 @@ case `uname` in
   Linux)
     if [ `command -v apt-get` ]; then
       apt-get install -y buildbot
+      locale-gen en_US en_US.UTF-8
+      dpkg-reconfigure locales
     elif [ `command -v dnf`  ]; then
       dnf -y install buildbot
     fi
