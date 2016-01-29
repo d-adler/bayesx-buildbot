@@ -1,0 +1,74 @@
+Vagrant.configure(2) do |config|
+  if Vagrant.has_plugin?("vagrant-proxyconf")
+    config.proxy.no_proxy = "localhost,127.0.0.1,.bb,10.0.2.2,10.0.2.15"
+  end
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_host = true
+  config.hostmanager.ignore_private_ip = false
+  config.hostmanager.include_offline = false
+  config.vm.provision 'proxyconf', type: 'shell', path: 'sh/proxyconf.sh'
+  config.vm.provision 'vcs',       type: 'shell', path: 'sh/vcs.sh'
+  config.vm.define 'master' do |config|
+    # BROKEN: config.vm.box = 'obsd-5.8'
+    config.vm.box = 'deb-8.2'
+    config.vm.hostname = 'master.bb'
+    config.vm.network 'private_network', ip: '10.11.12.11'
+    config.vm.provision 'buildbot',        type: 'shell', path: 'sh/buildbot.sh'
+    config.vm.provision 'buildbot-setup',  type: 'shell', path: 'sh/buildbot-setup.sh', privileged: false
+  end
+  config.vm.define 'deb' do |config|
+    config.vm.box = 'deb-8.2'
+    config.vm.hostname = 'deb.bb'
+    config.vm.network 'private_network', ip: '10.11.12.20'
+    config.vm.provision 'buildslave',       type: 'shell', path: 'sh/buildslave.sh'
+    config.vm.provision 'cmake',            type: 'shell', path: 'sh/cmake.sh'
+    config.vm.provision 'cxx',              type: 'shell', path: 'sh/cxx.sh'
+    config.vm.provision 'r',                type: 'shell', path: 'sh/r.sh'
+    config.vm.provision 'buildslave-setup', type: 'shell', path: 'sh/buildslave-setup.sh', privileged: false
+  end
+  config.vm.define 'fed' do |config|
+    config.vm.box = 'fed-22'
+    config.vm.hostname = 'fed.bb'
+    config.vm.network 'private_network', ip: '10.11.12.21'
+    config.vm.provision 'buildslave',       type: 'shell', path: 'sh/buildslave.sh'
+    config.vm.provision 'cmake',            type: 'shell', path: 'sh/cmake.sh'
+    config.vm.provision 'cxx',              type: 'shell', path: 'sh/cxx.sh'
+    config.vm.provision 'r',                type: 'shell', path: 'sh/r.sh'
+    config.vm.provision 'buildslave-setup', type: 'shell', path: 'sh/buildslave-setup.sh', privileged: false
+  end
+  config.vm.define 'sol' do |config|
+    config.vm.box = 'sol10'
+    config.vm.hostname = 'sol.bb' 
+    config.vm.network 'private_network', ip: '10.11.12.22'
+    config.vm.provision 'buildslave',       type: 'shell', path: 'sh/buildslave.sh'
+    config.vm.provision 'devuser',          type: 'shell', path: 'sh/devuser.sh', privileged: false
+    config.vm.provision 'cmake',            type: 'shell', path: 'sh/cmake.sh'
+    config.vm.provision 'cxx',              type: 'shell', path: 'sh/cxx.sh'
+    config.vm.provision 'solstudio',        type: 'shell', path: 'sh/solstudio.sh'
+    config.vm.provision 'buildslave-setup', type: 'shell', path: 'sh/buildslave-setup.sh', privileged: false
+  end
+  config.vm.define 'win' do |config|
+    config.vm.box = 'win81'
+    # config.vm.box = 'ws2008-r2'
+    #config.vm.hostname = 'win' 
+    #config.vm.communicator = 'winrm'
+    config.vm.network 'private_network', ip: '10.11.12.23'
+    config.vm.provision 'choco',               type: 'shell', path: 'sh/choco.bat'
+    config.vm.provision 'proxyconf',           type: 'shell', path: 'sh/proxyconf.bat'
+    config.vm.provision 'python',              type: 'shell', path: 'sh/python.bat'
+    config.vm.provision 'buildslave',          type: 'shell', path: 'sh/buildslave.bat'
+    config.vm.provision 'logonasservice',      type: 'shell', path: 'sh/logonasservice.ps1', args: 'vagrant'
+    config.vm.provision 'buildslave-service',  type: 'shell', path: 'sh/buildslave-service.bat'
+    config.vm.provision 'buildslave-service2', type: 'shell', path: 'sh/buildslave-service2.ps1'
+    config.vm.provision 'buildslave-setup',    type: 'shell', path: 'sh/buildslave-setup.bat', privileged: false, args: 'win'
+    config.vm.provision 'buildslave-service3', type: 'shell', path: 'sh/buildslave-service3.bat'
+    config.vm.provision 'vcs',                 type: 'shell', path: 'sh/vcs.bat'
+    config.vm.provision 'vs',                  type: 'shell', path: 'sh/vs.bat'
+    config.vm.provision 'cmake',               type: 'shell', path: 'sh/cmake.bat'
+    config.vm.provision 'gsl',                 type: 'shell', path: 'sh/gsl.bat'
+    config.vm.provider "virtualbox" do |vb|
+      # vb.gui = true
+    end
+  end
+end
+

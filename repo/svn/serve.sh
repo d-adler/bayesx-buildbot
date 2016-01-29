@@ -1,0 +1,2 @@
+svnserve -d --foreground -r .
+

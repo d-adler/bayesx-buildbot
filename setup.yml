@@ -1,0 +1,27 @@
+projects:
+- name: BayesX
+  site: http://
+  url: hg://10.0.2.2:8000/
+  require: [cxx]
+  tasks:
+  - bootstrap: ./bootstrap.sh
+  - configure: cmake .
+  - build:     make bayesxsrc
+vagrant:
+  net: 10.11.12/24
+  nodes:
+    master:
+    - master: 
+    fed:
+    - name: fed-gcc
+    - name: fed-clang
+      vars:
+        CC: clang
+        CXX: clang++
+    deb:
+      - name: deb
+nodes:
+- url: dynware-hq.org
+  slaves:
+  - name: dynware-hq.org
+

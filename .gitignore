@@ -1,0 +1,5 @@
+.ssh_config
+.bundle
+.vagrant
+_dl/
+_trash/
