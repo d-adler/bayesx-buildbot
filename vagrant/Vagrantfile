@@ -12,6 +12,7 @@ Vagrant.configure(2) do |config|
     # BROKEN: config.vm.box = 'obsd-5.8'
     config.vm.box = 'deb-8.2'
     config.vm.hostname = 'master.bb'
+    config.vm.communicator = 'ssh'
     config.vm.network 'private_network', ip: '10.11.12.11'
     config.vm.provision 'buildbot',        type: 'shell', path: 'sh/buildbot.sh'
     config.vm.provision 'buildbot-setup',  type: 'shell', path: 'sh/buildbot-setup.sh', privileged: false
@@ -23,29 +24,53 @@ Vagrant.configure(2) do |config|
     config.vm.provision 'buildslave',       type: 'shell', path: 'sh/buildslave.sh'
     config.vm.provision 'cmake',            type: 'shell', path: 'sh/cmake.sh'
     config.vm.provision 'cxx',              type: 'shell', path: 'sh/cxx.sh'
+    config.vm.provision 'jdk',              type: 'shell', path: 'sh/jdk.sh'
     config.vm.provision 'r',                type: 'shell', path: 'sh/r.sh'
     config.vm.provision 'buildslave-setup', type: 'shell', path: 'sh/buildslave-setup.sh', privileged: false
+    config.vm.provider "virtualbox" do |vb|
+      vb.memory = 4096
+      vb.cpus   = 4
+      # vb.gui = true
+    end
   end
   config.vm.define 'fed' do |config|
     config.vm.box = 'fed-22'
     config.vm.hostname = 'fed.bb'
     config.vm.network 'private_network', ip: '10.11.12.21'
-    config.vm.provision 'buildslave',       type: 'shell', path: 'sh/buildslave.sh'
-    config.vm.provision 'cmake',            type: 'shell', path: 'sh/cmake.sh'
-    config.vm.provision 'cxx',              type: 'shell', path: 'sh/cxx.sh'
-    config.vm.provision 'r',                type: 'shell', path: 'sh/r.sh'
-    config.vm.provision 'buildslave-setup', type: 'shell', path: 'sh/buildslave-setup.sh', privileged: false
+    # config.vm.provision 'cmake',            type: 'shell', path: 'sh/cmake.sh'
+    # config.vm.provision 'cxx',              type: 'shell', path: 'sh/cxx.sh'
+    config.vm.provision 'r',                  type: 'shell', path: 'sh/r.sh'
+    config.vm.provision 'clang',              type: 'shell', path: 'sh/clang.sh'
+    config.vm.provision 'r-clang',            type: 'shell', path: 'sh/r-clang.sh', privileged: false
+    config.vm.provision 'gsl',                type: 'shell', path: 'sh/gsl.sh'
+    config.vm.provision 'readline',           type: 'shell', path: 'sh/readline.sh'
+    config.vm.provision 'buildslave',         type: 'shell', path: 'sh/buildslave.sh'
+    config.vm.provision 'buildslave-setup',   type: 'shell', path: 'sh/buildslave-setup.sh', privileged: false
+    config.vm.provider "virtualbox" do |vb|
+      vb.memory = 4096
+      vb.cpus   = 4
+      # vb.gui = true
+    end
   end
   config.vm.define 'sol' do |config|
     config.vm.box = 'sol10'
     config.vm.hostname = 'sol.bb' 
     config.vm.network 'private_network', ip: '10.11.12.22'
+    config.vm.communicator = 'ssh'
     config.vm.provision 'buildslave',       type: 'shell', path: 'sh/buildslave.sh'
     config.vm.provision 'devuser',          type: 'shell', path: 'sh/devuser.sh', privileged: false
     config.vm.provision 'cmake',            type: 'shell', path: 'sh/cmake.sh'
     config.vm.provision 'cxx',              type: 'shell', path: 'sh/cxx.sh'
     config.vm.provision 'solstudio',        type: 'shell', path: 'sh/solstudio.sh'
+    config.vm.provision 'rdev',             type: 'shell', path: 'sh/sol/rdev.sh',         privileged: false
+    config.vm.provision 'tex',              type: 'shell', path: 'sh/sol/tex.sh',          privileged: false
+    config.vm.provision 'rbuild-sun64',     type: 'shell', path: 'sh/sol/rbuild-sun64.sh', privileged: false
     config.vm.provision 'buildslave-setup', type: 'shell', path: 'sh/buildslave-setup.sh', privileged: false
+    config.vm.provider "virtualbox" do |vb|
+      vb.memory = 4096
+      vb.cpus   = 4
+      # vb.gui = true
+    end
   end
   config.vm.define 'win' do |config|
     config.vm.box = 'win81'
@@ -53,6 +78,7 @@ Vagrant.configure(2) do |config|
     #config.vm.hostname = 'win' 
     config.vm.communicator = 'winrm'
     config.vm.network 'private_network', ip: '10.11.12.23'
+    config.vm.provision 'r',                   type: 'shell', path: 'sh/r.bat'
     config.vm.provision 'choco',               type: 'shell', path: 'sh/choco.bat'
     config.vm.provision 'proxyconf',           type: 'shell', path: 'sh/proxyconf.bat'
     config.vm.provision 'python',              type: 'shell', path: 'sh/python.bat'
@@ -63,11 +89,12 @@ Vagrant.configure(2) do |config|
     config.vm.provision 'buildslave-setup',    type: 'shell', path: 'sh/buildslave-setup.bat', privileged: false, args: 'win'
     config.vm.provision 'buildslave-service3', type: 'shell', path: 'sh/buildslave-service3.bat'
     config.vm.provision 'vcs',                 type: 'shell', path: 'sh/vcs.bat'
-    config.vm.provision 'vs',                  type: 'shell', path: 'sh/vs.bat'
-    config.vm.provision 'cmake',               type: 'shell', path: 'sh/cmake.bat'
-    config.vm.provision 'gsl',                 type: 'shell', path: 'sh/gsl.bat'
+#    config.vm.provision 'vs',                  type: 'shell', path: 'sh/vs.bat'
+#    config.vm.provision 'mingw',               type: 'shell', path: 'sh/mingw.bat'
+#    config.vm.provision 'cmake',               type: 'shell', path: 'sh/cmake.bat'
+#    config.vm.provision 'gsl',                 type: 'shell', path: 'sh/gsl.bat'
     config.vm.provider "virtualbox" do |vb|
-      # vb.gui = true
+      vb.gui = true
     end
   end
 end

@@ -1,0 +1,11 @@
+#!/sbin/sh
+
+case "$1" in
+  start)
+    su - vagrant -c 'buildslave start slave'
+    ;;
+  stop)
+    su - vagrant -c 'buildslave stop slave'
+    ;;
+esac
+
