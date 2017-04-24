@@ -1,3 +1,18 @@
+- sol: use gmake not make for R builds (workaround... make symlink to gmake in /usr/r-sun64/bin)
+- sol: nproc not found (bayesxsrc R build fails - does not compile.. nproc shell dummy in /usr/bin )
+- win,osx: add pdflatex
+- win: Remove OpenSSH from User vagrant's PATH via script (temporarly deactivated via renaming to ..\OpenSSH_OFF\.. )
+       mingw32-make complains: sh.exe is in PATH
+
+DONE: 
+- win: added mingw, builds with GSL successfully
+- deb: build jar etc..
+
+  - add mingw
+  - compile with mingw
+    - CMake -G MinGW Makefiles: 
+  - disable synced folder
+
 - fed: more minimal R setup for fed ?!
 - add vagrant machines: osx
 
