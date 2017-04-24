@@ -8,6 +8,7 @@ Subprojects:
 - `hgconvert`: OK
 - `svnsync`: fails
 - `rdump`: just a single revision and fails
+- `import`: import projects
 
 ## Trouble
 

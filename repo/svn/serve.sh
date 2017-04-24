@@ -1,2 +1,2 @@
-svnserve -d --foreground -r .
+svnserve -d --foreground -r repos
 
