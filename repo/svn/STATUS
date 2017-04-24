@@ -1,0 +1,9 @@
+
++ bayesx_full
++ svnadmin create repos/bayesx
++ cp pre-revprop-change repos/bayesx/hooks/
++ svnsync init file:////p/buildbot/repo/svn/repos/bayesx http://svn.gwdg.de/svn/bayesx
+Copied properties for revision 0.
++ svnsync sync file:////p/buildbot/repo/svn/repos/bayesx
+svnsync: E200007: The requested report is unknown.
+
