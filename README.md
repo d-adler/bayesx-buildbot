@@ -26,6 +26,16 @@ echo "update" >>update-trigger
 svn commit -m "update
 ~~~
 
+4. Configure Buildbot Master
+~~~
+cd vagrant/master
+~~~
+edit files
+~~~
+hg push
+~~~
+
+
 Watch build farm compilation at http://master.bb:8010/waterfall
 
 ~~~
@@ -44,10 +54,11 @@ master/
     master.cfg
 ~~~
 
-## TODO
+## Get prequisites
 
-- Build java
-- Build bayesxsrc R Package
+~~~
+./bootstrap.sh
+~~~
 
 ## Getting Started..
 
@@ -102,4 +113,10 @@ svn checkout http://svn.gwdg.de/svn/bayesx/trunk bayesx
 easy_install pip
 pip install buildbot
 ~~~
+
+## Troubleshooting building R Package BayesXsrc
+
+BayesXsrc suggests "R2BayesX", and R CMD check insists on this.
+Workaround: Set environment variable `_R_CHECK_FORCE_SUGGESTS_` to `FALSE`
+
 

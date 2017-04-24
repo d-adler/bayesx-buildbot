@@ -1,5 +1,6 @@
-.ssh_config
-.bundle
-.vagrant
-_dl/
-_trash/
+/.ssh_config
+/.bundle
+/.vagrant
+/_dl/
+/_trash/
+/repo/svn/repos
