@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+  <key>UserName</key>
+  <string>vagrant</string>
+  <key>WorkingDirectory</key>
+  <string>/Users/vagrant/</string>
+  <key>StandardOutPath</key>
+  <string>twistd.log</string>
+  <key>StandardErrorPath</key>
+  <string>twistd-err.log</string>
+  <key>KeepAlive</key>
+  <dict>
+    <key>SuccessfulExit</key>
+    <false/>
+  </dict>
+  <key>Label</key>
+  <string>buildbot.slave</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/local/bin/buildslave</string>
+    <string>start</string>
+    <string>--nodaemon</string>
+    <string>slave</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  </dict>
+</plist>
+

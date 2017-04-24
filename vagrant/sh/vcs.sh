@@ -9,5 +9,8 @@ case `uname` in
   SunOS)
     pkgutil -i -y subversion mercurial git
     ;;
+  Darwin)
+    port install subversion mercurial git
+    ;;
 esac
 

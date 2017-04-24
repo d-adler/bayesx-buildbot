@@ -15,5 +15,8 @@ case `uname` in
   SunOS)
     pkgutil -i -y cmake
     ;; 
+  Darwin)
+    port install cmake
+    ;;
 esac
 

@@ -16,5 +16,8 @@ case `uname` in
   SunOS)
     pkgutil -i -y R
     ;; 
+  Darwin)
+    port install R
+    ;;
 esac
 

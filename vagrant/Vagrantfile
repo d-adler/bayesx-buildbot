@@ -37,7 +37,7 @@ Vagrant.configure(2) do |config|
     config.vm.box = 'fed-22'
     config.vm.hostname = 'fed.bb'
     config.vm.network 'private_network', ip: '10.11.12.21'
-    # config.vm.provision 'cmake',            type: 'shell', path: 'sh/cmake.sh'
+    config.vm.provision 'cmake',            type: 'shell', path: 'sh/cmake.sh'
     # config.vm.provision 'cxx',              type: 'shell', path: 'sh/cxx.sh'
     config.vm.provision 'r',                  type: 'shell', path: 'sh/r.sh'
     config.vm.provision 'clang',              type: 'shell', path: 'sh/clang.sh'
@@ -93,9 +93,22 @@ Vagrant.configure(2) do |config|
 #    config.vm.provision 'mingw',               type: 'shell', path: 'sh/mingw.bat'
 #    config.vm.provision 'cmake',               type: 'shell', path: 'sh/cmake.bat'
 #    config.vm.provision 'gsl',                 type: 'shell', path: 'sh/gsl.bat'
+    config.vm.provision 'tex',                 type: 'shell', path: 'sh/tex.bat'
     config.vm.provider "virtualbox" do |vb|
-      vb.gui = true
+    #  vb.gui = true
     end
+  end
+  config.vm.define 'osx' do |config|
+    config.vm.box = 'osx9'
+    config.vm.hostname = 'osx' 
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+    config.vm.network 'private_network', ip: '10.11.12.24'
+    config.vm.provision 'macports', type: 'shell', path: 'sh/macports.sh', privileged: false
+    config.vm.provision 'buildslave',       type: 'shell', path: 'sh/buildslave.sh'
+    config.vm.provision 'buildslave-setup', type: 'shell', path: 'sh/buildslave-setup.sh', privileged: false
+    config.vm.provision 'cmake',            type: 'shell', path: 'sh/cmake.sh'
+    config.vm.provision 'vcs',              type: 'shell', path: 'sh/vcs.sh'
+    config.vm.provision 'r',                type: 'shell', path: 'sh/r.sh'
   end
 end
 
